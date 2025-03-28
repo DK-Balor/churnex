@@ -1,38 +1,85 @@
-import React from 'react';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
-const PlaceholderSection = ({ title }: { title: string }) => (
-  <div className="space-y-6">
-    <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
-    <Card className="p-6 border-2 hover:border-brand-green/20 transition-colors">
-      <div className="flex flex-col items-center justify-center py-12 text-center">
-        <h2 className="text-lg font-semibold text-gray-800 mb-2">Coming Soon</h2>
-        <p className="text-gray-500">This section is under development.</p>
-      </div>
+export function BehaviorAnalysis() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Behavior Analysis</CardTitle>
+        <CardDescription>Customer behavior patterns and trends</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p className="text-muted-foreground">Behavior analysis content coming soon...</p>
+      </CardContent>
     </Card>
-  </div>
-);
+  );
+}
 
-export const BehaviorAnalysis = () => (
-  <PlaceholderSection title="Behavior Analysis" />
-);
+export function ChurnPredictions() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Churn Predictions</CardTitle>
+        <CardDescription>AI-powered churn risk assessment</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p className="text-muted-foreground">Churn predictions content coming soon...</p>
+      </CardContent>
+    </Card>
+  );
+}
 
-export const ChurnPredictions = () => (
-  <PlaceholderSection title="Churn Predictions" />
-);
+export function SuccessPatterns() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Success Patterns</CardTitle>
+        <CardDescription>Patterns in successful customer retention</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p className="text-muted-foreground">Success patterns content coming soon...</p>
+      </CardContent>
+    </Card>
+  );
+}
 
-export const SuccessPatterns = () => (
-  <PlaceholderSection title="Success Patterns" />
-);
+export function Analytics() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Analytics</CardTitle>
+        <CardDescription>Detailed analytics and reporting</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p className="text-muted-foreground">Analytics content coming soon...</p>
+      </CardContent>
+    </Card>
+  );
+}
 
-export const Analytics = () => (
-  <PlaceholderSection title="Analytics" />
-);
+export function Alerts() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Alerts</CardTitle>
+        <CardDescription>System alerts and notifications</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p className="text-muted-foreground">Alerts content coming soon...</p>
+      </CardContent>
+    </Card>
+  );
+}
 
-export const Alerts = () => (
-  <PlaceholderSection title="Alerts" />
-);
-
-export const Settings = () => (
-  <PlaceholderSection title="Settings" />
-); 
+export function Settings() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Settings</CardTitle>
+        <CardDescription>System and account settings</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p className="text-muted-foreground">Settings content coming soon...</p>
+      </CardContent>
+    </Card>
+  );
+} 

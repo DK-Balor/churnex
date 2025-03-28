@@ -1,5 +1,5 @@
 import { supabase } from './supabase';
-import type { Customer, AIInsight } from '@/types/dashboard';
+import type { AIInsight } from '@/types/dashboard';
 
 class ChurnAIService {
   private static instance: ChurnAIService;

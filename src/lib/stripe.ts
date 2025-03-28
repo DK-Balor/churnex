@@ -1,5 +1,4 @@
 import { supabase } from './supabase';
-import type { Customer } from '@/types/dashboard';
 
 export interface StripeCustomer {
   id: string;

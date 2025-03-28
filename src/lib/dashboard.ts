@@ -3,7 +3,7 @@ import type { DashboardMetrics, CustomerActivity, Customer, TimeRange } from '@/
 
 class DashboardService {
   private static instance: DashboardService;
-  private subscribers: ((payload: any) => void)[] = [];
+  private subscribers: ((data: any) => void)[] = [];
 
   private constructor() {}
 
@@ -113,7 +113,7 @@ class DashboardService {
     }
   }
 
-  subscribeToCustomerUpdates(callback: (payload: any) => void) {
+  subscribeToCustomerUpdates(callback: (data: any) => void) {
     this.subscribers.push(callback);
 
     const subscription = supabase
@@ -125,10 +125,6 @@ class DashboardService {
       this.subscribers = this.subscribers.filter(sub => sub !== callback);
       subscription.unsubscribe();
     };
-  }
-
-  private notifySubscribers(payload: any) {
-    this.subscribers.forEach(callback => callback(payload));
   }
 }
 

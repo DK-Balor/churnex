@@ -1,147 +1,46 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
-import { cn } from '../../utils/cn';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Brain, ArrowRight } from 'lucide-react';
 
-const HeroSection: React.FC<{ onLearnMore: () => void }> = ({ onLearnMore }) => {
-  const [isHovering, setIsHovering] = useState(false);
+export default function HeroSection() {
   const navigate = useNavigate();
 
   return (
-    <section className="gradient-bg py-20 md:py-28">
-      <div className="container max-w-6xl mx-auto px-4 md:flex items-center">
-        <div className="md:w-1/2 mb-12 md:mb-0 md:pr-12 animate-fade-in">
-          <div className="inline-flex items-center text-sm bg-white py-1 px-3 rounded-full mb-6 text-brand-dark-700">
-            <div className="w-2 h-2 bg-brand-green rounded-full mr-2"></div>
-            <span>Recover lost revenue</span>
+    <div className="relative isolate overflow-hidden bg-background">
+      <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40">
+        <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
+          <div className="mt-24 sm:mt-32 lg:mt-16">
+            <a href="#" className="inline-flex space-x-6">
+              <span className="rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold leading-6 text-primary ring-1 ring-inset ring-primary/20">
+                What's new
+              </span>
+              <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-muted-foreground">
+                <span>Just shipped v1.0</span>
+                <ArrowRight className="h-5 w-5" aria-hidden="true" />
+              </span>
+            </a>
           </div>
-
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-brand-dark-900 mb-6 leading-tight">
-            Predict <span className="text-brand-dark-800">&</span> Prevent <br/>
-            <span className="text-brand-green">Customer Churn</span> <br/>
-            Before It Happens
-          </h2>
-
-          <p className="text-lg text-brand-dark-600 mb-8 max-w-lg">
-            Churnex<span className="text-xs align-top text-brand-green">™</span> uses AI to identify at-risk customers and recover revenue before it's
-            lost. Our platform helps subscription businesses reduce churn by up to 43%.
+          <h1 className="mt-10 text-4xl font-bold tracking-tight text-foreground sm:text-6xl">
+            AI-Powered Customer Retention Platform
+          </h1>
+          <p className="mt-6 text-lg leading-8 text-muted-foreground">
+            Predict and prevent customer churn with our advanced AI analytics. Get actionable insights to keep your customers happy and loyal.
           </p>
-
-          <div className="flex flex-col sm:flex-row gap-4">
-            <button
-              onClick={() => navigate('/contact')}
-              className="bg-brand-green hover:bg-brand-green-600 text-white px-6 py-3 rounded-md font-medium text-lg transition-colors text-center group"
-            >
-              Contact Sales
-              <ArrowRight className="inline ml-2 transition-transform group-hover:translate-x-1" size={18} />
-            </button>
-            <button
-              onClick={onLearnMore}
-              className="border border-brand-dark-300 hover:border-brand-dark-400 text-brand-dark-800 px-6 py-3 rounded-md font-medium text-lg transition-colors text-center"
-            >
-              See how it works
-            </button>
-          </div>
-           
-          <div className="mt-8 flex items-center text-sm text-brand-dark-500">
-            <span className="inline-block px-2 py-1 bg-brand-dark-100 text-xs rounded mr-2">NEW</span>
-            Now with AI-powered win-back campaign suggestions
+          <div className="mt-10 flex items-center gap-x-6">
+            <Button size="lg" onClick={() => navigate('/signup')}>
+              Get started
+            </Button>
+            <Button variant="outline" size="lg" onClick={() => navigate('/demo')}>
+              Try demo
+            </Button>
           </div>
         </div>
-
-        <div className="md:w-1/2 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          {/* Dashboard Preview with hover animation */}
-          <div 
-            className={cn(
-              "bg-white rounded-lg shadow-card overflow-hidden border border-gray-100 transition-all duration-300",
-              isHovering ? "transform scale-105" : ""
-            )}
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-            onClick={() => navigate('/demo/dashboard')}
-            style={{ cursor: 'pointer' }}
-          >
-            <div className="p-4 bg-gray-50 border-b border-gray-100 flex justify-between items-center">
-              <h3 className="text-lg font-semibold text-brand-dark-700">Revenue Recovery Dashboard</h3>
-              <div className="flex space-x-1">
-                <div className="w-3 h-3 rounded-full bg-red-400"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
-                <div className="w-3 h-3 rounded-full bg-green-400"></div>
-              </div>
-            </div>
-            <div className="p-6">
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <div className={cn(
-                  "bg-white p-4 rounded-lg border border-gray-100 transition-all duration-500",
-                  isHovering ? "bg-brand-green-50" : ""
-                )}>
-                  <p className="text-sm text-brand-dark-500">Revenue Recovered</p>
-                  <p className={cn(
-                    "text-3xl font-bold transition-all duration-500",
-                    isHovering ? "text-brand-green" : "text-brand-dark-900"
-                  )}>
-                    {isHovering ? '$31,547' : '$28,429'}
-                  </p>
-                </div>
-                <div className={cn(
-                  "bg-white p-4 rounded-lg border border-gray-100 transition-all duration-500",
-                  isHovering ? "bg-brand-green-50" : ""
-                )}>
-                  <p className="text-sm text-brand-dark-500">Recovery Rate</p>
-                  <p className={cn(
-                    "text-3xl font-bold transition-all duration-500",
-                    isHovering ? "text-brand-green" : "text-brand-green"
-                  )}>
-                    {isHovering ? '92%' : '87%'}
-                  </p>
-                </div>
-              </div>
-               
-              <div className="mb-4">
-                <div className="flex justify-between items-center mb-2">
-                  <h4 className="text-sm font-medium text-brand-dark-600">Recovery Trend</h4>
-                  <span className="text-xs text-brand-dark-400">Last 30 days</span>
-                </div>
-                <div className="h-32 bg-gray-50 rounded-lg flex items-end p-2 space-x-1">
-                  {[30, 45, 40, 60, 50, 45, 70, 55, 60, 80].map((height, i) => (
-                    <div
-                      key={i}
-                      className={cn(
-                        "w-full rounded-t-sm",
-                        i % 3 === 0 ? "bg-brand-green" : "bg-brand-dark-400",
-                        isHovering && i === 9 ? "animate-pulse" : ""
-                      )}
-                      style={{ 
-                        height: `${isHovering && i === 8 ? height + 10 : height}%`,
-                        transition: 'height 0.5s ease-in-out'
-                      }}
-                    ></div>
-                  ))}
-                </div>
-              </div>
-               
-              <div className="flex justify-between">
-                <button
-                  onClick={() => navigate('/demo/dashboard')}
-                  className="text-brand-dark-600 text-sm font-medium hover:text-brand-green transition-colors"
-                >
-                  View Full Dashboard
-                </button>
-                <div className={cn(
-                  "px-2 py-1 text-xs rounded-md transition-all duration-300",
-                  isHovering 
-                    ? "bg-brand-green text-white" 
-                    : "bg-brand-green-50 text-brand-green-600"
-                )}>
-                  {isHovering ? 'Risk Alert: 3 customers' : 'New Alert'}
-                </div>
-              </div>
-            </div>
+        <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
+          <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
+            <Brain className="w-[76rem] rounded-md bg-white/5 shadow-2xl ring-1 ring-white/10" />
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
-};
-
-export default HeroSection; 
+} 
