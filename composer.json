@@ -7,12 +7,10 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "npm install",
-            "npm run build"
+            "echo 'Node.js deployment will be handled by Hostinger'"
         ],
         "post-update-cmd": [
-            "npm install",
-            "npm run build"
+            "echo 'Node.js deployment will be handled by Hostinger'"
         ]
     }
 } 
