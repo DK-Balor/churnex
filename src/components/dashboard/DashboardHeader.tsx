@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../lib/auth/AuthContext';
 import { Button } from '../ui/button';
+import { UserProfile } from './UserProfile';
 
 export function DashboardHeader() {
   const { user, signOut } = useAuth();
@@ -19,6 +20,7 @@ export function DashboardHeader() {
             </div>
           </div>
           <div className="flex items-center">
+            <UserProfile />
             <Button
               variant="ghost"
               onClick={() => signOut()}
