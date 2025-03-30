@@ -31,9 +31,9 @@ const SignupPage = () => {
     whatsNext: false,
   });
 
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const success = false;
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     const { password } = formData;
@@ -49,12 +49,12 @@ const SignupPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    setLoading(true);
+    setIsLoading(true);
 
     // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
-      setLoading(false);
+      setIsLoading(false);
       return;
     }
 
@@ -62,7 +62,7 @@ const SignupPage = () => {
     const isPasswordStrong = Object.values(passwordStrength).every(Boolean);
     if (!isPasswordStrong) {
       setError('Please ensure your password meets all requirements');
-      setLoading(false);
+      setIsLoading(false);
       return;
     }
 
@@ -87,7 +87,7 @@ const SignupPage = () => {
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred during signup');
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -179,7 +179,7 @@ const SignupPage = () => {
                       value={formData.name}
                       onChange={handleChange}
                       className="w-full"
-                      disabled={loading}
+                      disabled={isLoading}
                     />
                   </div>
 
@@ -196,7 +196,7 @@ const SignupPage = () => {
                       value={formData.email}
                       onChange={handleChange}
                       className="w-full"
-                      disabled={loading}
+                      disabled={isLoading}
                     />
                   </div>
 
@@ -212,7 +212,7 @@ const SignupPage = () => {
                       value={formData.company}
                       onChange={handleChange}
                       className="w-full"
-                      disabled={loading}
+                      disabled={isLoading}
                     />
                   </div>
 
@@ -229,7 +229,7 @@ const SignupPage = () => {
                       value={formData.password}
                       onChange={handleChange}
                       className="w-full"
-                      disabled={loading}
+                      disabled={isLoading}
                     />
                   </div>
 
@@ -246,7 +246,7 @@ const SignupPage = () => {
                       value={formData.confirmPassword}
                       onChange={handleChange}
                       className="w-full"
-                      disabled={loading}
+                      disabled={isLoading}
                     />
                   </div>
 
@@ -259,7 +259,7 @@ const SignupPage = () => {
                       checked={formData.acceptTerms}
                       onChange={handleChange}
                       className="h-4 w-4 text-brand-green focus:ring-brand-green border-gray-300 rounded"
-                      disabled={loading}
+                      disabled={isLoading}
                     />
                     <label htmlFor="acceptTerms" className="ml-2 block text-sm text-brand-dark-700">
                       I agree to the{' '}
@@ -276,9 +276,9 @@ const SignupPage = () => {
                   <Button 
                     type="submit" 
                     className="w-full bg-brand-green text-white hover:bg-brand-green-600"
-                    disabled={loading}
+                    disabled={isLoading}
                   >
-                    {loading ? 'Creating account...' : 'Create account'}
+                    {isLoading ? 'Creating account...' : 'Create account'}
                   </Button>
 
                   <p className="text-center text-sm text-brand-dark-600">

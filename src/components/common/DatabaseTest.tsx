@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 
-export default function DatabaseTest() {
+export const DatabaseTest = () => {
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [message, setMessage] = useState('');
 
@@ -9,7 +9,7 @@ export default function DatabaseTest() {
     const testConnection = async () => {
       try {
         // Try to select from the users table
-        const { error } = await supabase
+        const { data, error } = await supabase
           .from('users')
           .select('count')
           .limit(1);
@@ -45,4 +45,4 @@ export default function DatabaseTest() {
       </div>
     </div>
   );
-} 
+}; 

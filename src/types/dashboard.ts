@@ -4,12 +4,13 @@ export type InsightType = 'pattern' | 'prediction' | 'opportunity';
 export type ImpactLevel = 'Critical' | 'High' | 'Medium' | 'Low';
 
 export interface AIInsight {
-  id: string;
+  type: InsightType;
   title: string;
   description: string;
-  severity: 'high' | 'medium' | 'low';
-  category: 'churn' | 'growth' | 'satisfaction';
-  createdAt: string;
+  impact: ImpactLevel;
+  recommendation: string;
+  confidence: number;
+  affectedCustomers: number;
 }
 
 export interface CustomerActivity {
@@ -52,17 +53,25 @@ export interface CustomerSegment {
 export interface Customer {
   id: string;
   name: string;
-  email: string;
-  company: string;
-  status: 'active' | 'inactive' | 'at_risk';
-  lastActive: string;
-  joinedAt: string;
-}
-
-export interface Metrics {
-  totalCustomers: number;
-  activeCustomers: number;
-  churnRate: number;
-  monthlyRevenue: number;
-  growthRate: number;
+  risk: number;
+  reason: string;
+  status: 'Urgent' | 'High' | 'Medium' | 'Low';
+  mrr: number;
+  lastContact: string;
+  nextAction: string;
+  trend: 'up' | 'down' | 'stable';
+  healthScore: number;
+  engagementScore: number;
+  segment: string;
+  subscription: {
+    status: string;
+    plan: string;
+    startDate: string;
+    renewalDate: string;
+  };
+  activity: {
+    lastLogin: string;
+    featureUsage: Record<string, number>;
+    supportTickets: number;
+  };
 } 

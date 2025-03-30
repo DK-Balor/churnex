@@ -1,5 +1,4 @@
 export type AccountType = 'demo' | 'trial' | 'paid';
-export type SubscriptionTier = 'free' | 'starter' | 'pro' | 'enterprise';
 
 export type PlanType = 'growth' | 'scale' | 'pro';
 
@@ -27,11 +26,17 @@ export const PLANS: Record<PlanType, Plan> = {
   }
 };
 
-export interface AccountStatus {
-  account_type: AccountType;
-  subscription_tier: SubscriptionTier;
-  expires_at: string | null;
+interface Profile {
+  first_name: string;
+  full_name: string;
 }
+
+export type AccountStatus = {
+  account_type: 'demo' | 'trial' | 'paid';
+  subscription_tier?: string;
+  expires_at?: string;
+  stripe_account_id?: string;
+};
 
 export interface AccountStatusWithUser extends AccountStatus {
   user: {

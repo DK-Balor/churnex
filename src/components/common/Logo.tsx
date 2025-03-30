@@ -1,15 +1,17 @@
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-export default function Logo() {
-  const navigate = useNavigate();
+const Logo = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
-    <button
-      onClick={() => navigate('/')}
-      className="flex items-center space-x-2"
-    >
-      <img src="/logo.svg" alt="Churnex Logo" className="h-8 w-auto" />
-      <span className="text-xl font-bold text-gray-900">Churnex</span>
-    </button>
+    <span className="text-xl font-bold text-brand-dark-900">
+      Churnex
+      <span className="text-xs align-top text-brand-green">™</span>
+    </span>
   );
-} 
+};
+
+export default Logo; 
