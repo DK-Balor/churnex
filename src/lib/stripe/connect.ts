@@ -8,7 +8,8 @@ const stripe = new Stripe(import.meta.env.VITE_STRIPE_SECRET_KEY, {
 
 export async function connectStripeAccount() {
   try {
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError) throw authError;
     if (!user) throw new Error('No authenticated user');
 
     const { data: existingAccount } = await supabase
@@ -23,11 +24,10 @@ export async function connectStripeAccount() {
 
     const account = await stripe.accounts.create({
       type: 'standard',
-      country: 'US',
       email: user.email,
       business_profile: {
         name: 'Your Business Name',
-        support_email: user.email,
+        url: 'https://yourbusiness.com',
       },
       capabilities: {
         card_payments: { requested: true },
@@ -48,16 +48,18 @@ export async function connectStripeAccount() {
 
     if (error) throw error;
 
+    const accountLink = await stripe.accountLinks.create({
+      account: account.id,
+      refresh_url: `${window.location.origin}/dashboard/settings/billing`,
+      return_url: `${window.location.origin}/dashboard/settings/billing`,
+      type: 'account_onboarding',
+    });
+
     return {
       success: true,
       accountId: account.id,
       onboardingUrl: account.details_submitted ? null : account.charges_enabled ? 
-        await stripe.accountLinks.create({
-          account: account.id,
-          refresh_url: `${window.location.origin}/dashboard/settings/billing`,
-          return_url: `${window.location.origin}/dashboard/settings/billing`,
-          type: 'account_onboarding',
-        }).then(link => link.url) : null,
+        accountLink.url : null,
     };
   } catch (error) {
     console.error('Error connecting Stripe account:', error);

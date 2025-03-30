@@ -14,25 +14,54 @@ export interface Database {
           id: string
           user_id: string
           stripe_account_id: string
-          status: string
+          connected: boolean
           created_at: string
-          updated_at: string | null
+          updated_at: string
         }
         Insert: {
           id?: string
           user_id: string
           stripe_account_id: string
-          status: string
+          connected: boolean
           created_at?: string
-          updated_at?: string | null
+          updated_at?: string
         }
         Update: {
           id?: string
           user_id?: string
           stripe_account_id?: string
-          status?: string
+          connected?: boolean
           created_at?: string
-          updated_at?: string | null
+          updated_at?: string
+        }
+      }
+      account_status: {
+        Row: {
+          id: string
+          user_id: string
+          account_type: 'demo' | 'trial' | 'paid'
+          subscription_tier?: string
+          expires_at?: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          account_type: 'demo' | 'trial' | 'paid'
+          subscription_tier?: string
+          expires_at?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          account_type?: 'demo' | 'trial' | 'paid'
+          subscription_tier?: string
+          expires_at?: string
+          created_at?: string
+          updated_at?: string
         }
       }
     }

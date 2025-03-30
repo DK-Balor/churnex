@@ -1,36 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
-import { Badge } from '@/components/ui/badge';
-import { Clock, InfoIcon } from 'lucide-react';
+import { InfoIcon } from 'lucide-react';
 import Logo from '@/components/common/Logo';
 import {
-  LayoutDashboard,
-  Users,
-  LineChart,
   Brain,
-  AlertTriangle,
-  MessageSquare,
-  BarChart3,
-  Settings,
   HeartPulse,
-  Target,
-  Zap,
-  ChevronDown,
-  CheckCircle2,
-  Bell,
-  Home,
-  TrendingUp,
-  ChevronRight,
-  FileText,
+  AlertTriangle,
   Users2,
   MessageCircle,
+  BarChart3,
+  FileText,
+  Bell,
+  Settings,
+  Home,
+  Target,
+  TrendingUp,
+  ChevronDown,
+  ChevronRight,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Link, useLocation } from 'react-router-dom';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useAuth } from '@/lib/auth/AuthContext';
-import { Button } from '@/components/ui/button';
 
 interface AccountStatus {
   account_type: 'demo' | 'trial' | 'paid';
@@ -257,7 +249,7 @@ export default function SideNav() {
                 >
                   <div className="ml-5 space-y-0.5 border-l pl-3 py-1">
                     <NavItem
-                      icon={<Users className="h-4 w-4" />}
+                      icon={<Users2 className="h-4 w-4" />}
                       label="Behavior Analysis"
                       href="/insights/behavior"
                       isActive={location.pathname === "/dashboard/insights/behavior"}
