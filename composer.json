@@ -1,6 +1,6 @@
 {
     "name": "dk-balor/churnex",
-    "description": "Churnex - Churn Prediction Platform",
+    "description": "Churnex - AI-Powered Churn Prediction Platform",
     "type": "project",
     "require": {
         "php": ">=8.0"
