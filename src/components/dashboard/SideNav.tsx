@@ -29,6 +29,8 @@ import {
 import { cn } from '@/lib/utils';
 import { Link, useLocation } from 'react-router-dom';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { useAuth } from '@/lib/auth/AuthContext';
+import { Button } from '@/components/ui/button';
 
 interface AccountStatus {
   account_type: 'demo' | 'trial' | 'paid';
@@ -78,6 +80,7 @@ const NavItem = ({ icon, label, href, isActive, hasDropdown, isOpen, onClick }: 
 
 export default function SideNav() {
   const location = useLocation();
+  const { user } = useAuth();
   const [isExpanded] = useState(true);
   const [accountStatus, setAccountStatus] = useState<AccountStatus | null>(null);
   const [insightsOpen, setInsightsOpen] = useState(false);
@@ -146,6 +149,10 @@ export default function SideNav() {
   const getExpiryDate = () => {
     if (!accountStatus?.expires_at) return null;
     return new Date(accountStatus.expires_at).toLocaleDateString();
+  };
+
+  const isActive = (path: string) => {
+    return location.pathname === path;
   };
 
   return (
