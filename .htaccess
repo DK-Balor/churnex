@@ -1,0 +1,20 @@
+RewriteEngine On
+RewriteBase /
+
+# Handle client-side routing
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.html [QSA,L]
+
+# Set proper MIME types
+AddType application/javascript .js
+AddType text/css .css
+AddType image/svg+xml .svg
+
+# Enable CORS
+Header set Access-Control-Allow-Origin "*"
+
+# Cache control
+<FilesMatch "\.(js|css|svg)$">
+    Header set Cache-Control "max-age=31536000, public"
+</FilesMatch> 
