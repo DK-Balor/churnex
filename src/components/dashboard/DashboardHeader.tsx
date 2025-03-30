@@ -1,34 +1,115 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../lib/auth/AuthContext';
 import { Button } from '../ui/button';
 import { UserProfile } from './UserProfile';
+import { Search, LogOut, HelpCircle, Wallet } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
+import { cn } from '@/lib/utils';
+import { Badge } from '@/components/ui/badge';
+import { PostgrestError } from '@supabase/supabase-js';
+import { connectStripeAccount } from '@/lib/stripe/connect';
 
 export function DashboardHeader() {
+  const navigate = useNavigate();
   const { user, signOut } = useAuth();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [stripeConnected, setStripeConnected] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleStripeConnect = async () => {
+    try {
+      setIsConnecting(true);
+      setError(null);
+      
+      const { url } = await connectStripeAccount();
+      window.location.href = url;
+    } catch (error) {
+      console.error('Error connecting Stripe:', error);
+      setError(error instanceof Error ? error.message : 'Failed to connect Stripe');
+    } finally {
+      setIsConnecting(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      navigate('/login');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
+  const handleHelpClick = () => {
+    navigate('/docs');
+  };
 
   return (
-    <header className="bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex">
-            <div className="flex-shrink-0 flex items-center">
-              <Link to="/dashboard" className="text-xl font-bold text-gray-900">
-                Churnex
-              </Link>
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-14 max-w-screen-2xl items-center justify-between px-4">
+        {/* Left section - Profile and Name */}
+        <div className="flex items-center gap-4">
+          <UserProfile />
+        </div>
+
+        {/* Middle section - Search */}
+        <div className="flex flex-1 items-center justify-center px-6">
+          <div className="w-full max-w-md">
+            <div className="relative">
+              <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search customers and projects..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setIsSearchFocused(true)}
+                onBlur={() => setIsSearchFocused(false)}
+                className={`w-full pl-8 transition-colors ${
+                  isSearchFocused ? 'border-brand-green ring-1 ring-brand-green' : ''
+                }`}
+              />
             </div>
           </div>
-          <div className="flex items-center">
-            <UserProfile />
+        </div>
+
+        {/* Right section - Actions */}
+        <div className="flex items-center gap-3">
+          {!stripeConnected && (
             <Button
-              variant="ghost"
-              onClick={() => signOut()}
-              className="text-gray-600 hover:text-gray-900"
+              variant="outline"
+              size="sm"
+              onClick={handleStripeConnect}
+              disabled={isConnecting}
+              className="gap-2"
             >
-              Sign out
+              <Wallet className="h-4 w-4" />
+              {isConnecting ? "Connecting..." : "Connect Stripe"}
             </Button>
-          </div>
+          )}
+          {error && (
+            <div className="text-sm text-red-500">
+              {error}
+            </div>
+          )}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleHelpClick}
+            className="gap-2"
+          >
+            <HelpCircle className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleLogout}
+            className="gap-2"
+          >
+            <LogOut className="h-4 w-4" />
+          </Button>
         </div>
       </div>
     </header>
