@@ -78,6 +78,39 @@ const NavItem = ({ icon, label, href, isActive, hasDropdown, isOpen, onClick }: 
   </Link>
 );
 
+const navigation = [
+  { name: 'Overview', href: '/dashboard' },
+  { name: 'Projects', href: '/dashboard/projects' },
+  { name: 'Customers', href: '/dashboard/customers' },
+  { name: 'Settings', href: '/dashboard/settings' },
+];
+
+export function SideNav() {
+  const location = useLocation();
+
+  return (
+    <nav className="space-y-1">
+      {navigation.map((item) => {
+        const isActive = location.pathname === item.href;
+        return (
+          <Link
+            key={item.name}
+            to={item.href}
+            className={cn(
+              isActive
+                ? 'bg-gray-100 text-gray-900'
+                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+              'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
+            )}
+          >
+            {item.name}
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}
+
 export default function SideNav() {
   const location = useLocation();
   const { user } = useAuth();
