@@ -13,6 +13,13 @@ interface ImportMetaEnvAugmentation {
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
+// Debug logging
+console.log('Environment Variables:', {
+  supabaseUrl: supabaseUrl ? 'Present' : 'Missing',
+  supabaseAnonKey: supabaseAnonKey ? 'Present' : 'Missing',
+  allEnv: import.meta.env
+});
+
 if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Supabase environment variables');
 }

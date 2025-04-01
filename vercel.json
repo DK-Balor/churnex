@@ -7,5 +7,11 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "env": {
+    "VITE_SUPABASE_URL": "@vite_supabase_url",
+    "VITE_SUPABASE_ANON_KEY": "@vite_supabase_anon_key",
+    "VITE_STRIPE_SECRET_KEY": "@vite_stripe_secret_key",
+    "VITE_STRIPE_CLIENT_ID": "@vite_stripe_client_id"
+  }
 } 
