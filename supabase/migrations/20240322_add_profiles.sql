@@ -74,26 +74,17 @@ CREATE OR REPLACE FUNCTION public.handle_new_user_profile()
 RETURNS TRIGGER AS $$
 DECLARE
     full_name TEXT;
-    profile_exists BOOLEAN;
 BEGIN
-    -- Check if profile already exists
-    SELECT EXISTS (
-        SELECT 1 FROM public.profiles WHERE id = NEW.id
-    ) INTO profile_exists;
+    -- Get the full name from user metadata or email
+    full_name := COALESCE(
+        NEW.raw_user_meta_data->>'full_name',
+        SPLIT_PART(NEW.email, '@', 1)
+    );
 
-    -- Only proceed if profile doesn't exist
-    IF NOT profile_exists THEN
-        -- Get the full name from user metadata or email
-        full_name := COALESCE(
-            NEW.raw_user_meta_data->>'full_name',
-            SPLIT_PART(NEW.email, '@', 1)
-        );
-
-        -- Insert the profile using service role
-        INSERT INTO public.profiles (id, full_name, email)
-        VALUES (NEW.id, full_name, NEW.email)
-        ON CONFLICT (id) DO NOTHING;
-    END IF;
+    -- Insert the profile using service role
+    INSERT INTO public.profiles (id, full_name, email)
+    VALUES (NEW.id, full_name, NEW.email)
+    ON CONFLICT (id) DO NOTHING;
 
     RETURN NEW;
 EXCEPTION

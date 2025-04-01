@@ -67,23 +67,6 @@ const SignupPage = () => {
     }
 
     try {
-      // Create profile first
-      const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .insert({
-          full_name: formData.name,
-          email: formData.email,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        })
-        .select()
-        .single();
-
-      if (profileError) {
-        console.error('Profile creation error:', profileError);
-        // Continue with signup even if profile creation fails
-      }
-
       // Sign up with Supabase
       const { data, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
