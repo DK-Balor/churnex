@@ -7,11 +7,5 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ],
-  "env": {
-    "VITE_SUPABASE_URL": "https://aqepnfjkrzczlxdsoagq.supabase.co",
-    "VITE_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFxZXBuZmprcnpjemx4ZHNvYWdxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI5MDg4MzMsImV4cCI6MjA1ODQ4NDgzM30.U1JfUVieo9FwV4IZwymEDE8_TK92IBl_rYlUzFecRgQ",
-    "VITE_STRIPE_SECRET_KEY": "sk_test_51R49CLD3U5KeJSvupprr12vDq1U0MURXZvtvuSfHfYqPnTXPL5l8gtpdsYBacNoPz0fmIItOQrG9GAJsWnvtEEKx00BqCEjQ1v",
-    "VITE_STRIPE_CLIENT_ID": "ca_S1JdDex4AG3muoAVzqtRYOTlapfcPcxA"
-  }
+  ]
 } 
