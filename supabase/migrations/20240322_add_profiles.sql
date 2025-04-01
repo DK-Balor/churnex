@@ -66,23 +66,33 @@ CREATE OR REPLACE FUNCTION public.handle_new_user_profile()
 RETURNS TRIGGER AS $$
 DECLARE
     full_name TEXT;
+    profile_exists BOOLEAN;
 BEGIN
-    -- Get the full name from user metadata or email
-    full_name := COALESCE(
-        NEW.raw_user_meta_data->>'full_name',
-        SPLIT_PART(NEW.email, '@', 1)
-    );
+    -- Check if profile already exists
+    SELECT EXISTS (
+        SELECT 1 FROM public.profiles WHERE id = NEW.id
+    ) INTO profile_exists;
 
-    -- Insert the profile using service role
-    INSERT INTO public.profiles (id, full_name, email)
-    VALUES (NEW.id, full_name, NEW.email)
-    ON CONFLICT (id) DO UPDATE
-    SET 
-        full_name = EXCLUDED.full_name,
-        email = EXCLUDED.email,
-        updated_at = TIMEZONE('utc'::text, NOW());
+    -- Only proceed if profile doesn't exist
+    IF NOT profile_exists THEN
+        -- Get the full name from user metadata or email
+        full_name := COALESCE(
+            NEW.raw_user_meta_data->>'full_name',
+            SPLIT_PART(NEW.email, '@', 1)
+        );
+
+        -- Insert the profile using service role
+        INSERT INTO public.profiles (id, full_name, email)
+        VALUES (NEW.id, full_name, NEW.email)
+        ON CONFLICT (id) DO NOTHING;
+    END IF;
 
     RETURN NEW;
+EXCEPTION
+    WHEN OTHERS THEN
+        -- Log the error but don't prevent user creation
+        RAISE LOG 'Error creating profile for user %: %', NEW.id, SQLERRM;
+        RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 

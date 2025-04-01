@@ -80,12 +80,41 @@ const SignupPage = () => {
         },
       });
 
-      if (signUpError) throw signUpError;
-
-      if (data?.user) {
-        setSuccess(true);
+      if (signUpError) {
+        console.error('Signup error:', signUpError);
+        throw signUpError;
       }
+
+      if (!data?.user) {
+        throw new Error('No user data returned from signup');
+      }
+
+      // Create profile manually if needed
+      try {
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .insert({
+            id: data.user.id,
+            full_name: formData.name,
+            email: formData.email,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          })
+          .select()
+          .single();
+
+        if (profileError) {
+          console.error('Profile creation error:', profileError);
+          // Don't throw here, as the user is already created
+        }
+      } catch (profileErr) {
+        console.error('Profile creation error:', profileErr);
+        // Don't throw here, as the user is already created
+      }
+
+      setSuccess(true);
     } catch (err) {
+      console.error('Signup error:', err);
       setError(err instanceof Error ? err.message : 'An error occurred during signup');
     } finally {
       setIsLoading(false);
