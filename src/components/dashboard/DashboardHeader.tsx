@@ -24,8 +24,16 @@ export function DashboardHeader() {
       setIsConnecting(true);
       setError(null);
       
-      const { url } = await connectStripeAccount();
-      window.location.href = url;
+      const response = await connectStripeAccount();
+      if (!response.success) {
+        throw new Error(response.error || 'Failed to connect Stripe');
+      }
+      
+      if (response.onboardingUrl) {
+        window.location.href = response.onboardingUrl;
+      } else {
+        setStripeConnected(true);
+      }
     } catch (error) {
       console.error('Error connecting Stripe:', error);
       setError(error instanceof Error ? error.message : 'Failed to connect Stripe');
