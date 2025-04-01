@@ -18,6 +18,10 @@ import {
   TrendingUp,
   ChevronDown,
   ChevronRight,
+  LayoutDashboard,
+  Users,
+  Activity,
+  HelpCircle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Link, useLocation } from 'react-router-dom';
@@ -69,6 +73,16 @@ const NavItem = ({ icon, label, href, isActive, hasDropdown, isOpen, onClick }: 
     )}
   </Link>
 );
+
+const navigation = [
+  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'Customers', href: '/dashboard/customers', icon: Users },
+  { name: 'Activity', href: '/dashboard/activity', icon: Activity },
+  { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
+  { name: 'Alerts', href: '/dashboard/alerts', icon: Bell },
+  { name: 'Settings', href: '/dashboard/settings', icon: Settings },
+  { name: 'Help', href: '/dashboard/help', icon: HelpCircle },
+];
 
 export default function SideNav() {
   const location = useLocation();

@@ -35,6 +35,9 @@ import {
   Download,
   Zap
 } from 'lucide-react';
+import DashboardLayout from '@/components/dashboard/DashboardLayout';
+import DashboardHome from './DashboardHome';
+import SettingsPage from './SettingsPage';
 
 // Mock data (you would replace this with real data from your API)
 const revenueData = [
@@ -329,19 +332,11 @@ const Overview = () => {
 
 export default function Dashboard() {
   return (
-    <div className="flex h-screen bg-gray-50">
-      <SideNav />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <DashboardHeader />
-        <main className="flex-1 overflow-auto custom-scrollbar">
-          <div className="container mx-auto px-6 py-8">
-            <Routes>
-              <Route index element={<Overview />} />
-              <Route path="/*" element={<DashboardContent />} />
-            </Routes>
-        </div>
-        </main>
-      </div>
-    </div>
+    <DashboardLayout>
+      <Routes>
+        <Route path="/" element={<DashboardHome />} />
+        <Route path="/settings" element={<SettingsPage />} />
+      </Routes>
+    </DashboardLayout>
   );
 } 

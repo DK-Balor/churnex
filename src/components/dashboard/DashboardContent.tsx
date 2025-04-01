@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   BehaviorAnalysis,
   ChurnPredictions,
@@ -133,30 +133,23 @@ const Reports = () => (
 
 export default function DashboardContent() {
   return (
-    <div className="flex-1 min-h-0 bg-gray-50/50">
-      <div className="h-full overflow-auto">
-        <div className="container mx-auto p-8 max-w-7xl">
-          <Routes>
-            <Route path="/" element={<Overview />} />
-            <Route path="/health" element={<CustomerHealth />} />
-            <Route path="/risk" element={<RiskDetection />} />
-            <Route path="/segments" element={<Segments />} />
-            <Route path="/insights">
-              <Route path="behavior" element={<BehaviorAnalysis />} />
-              <Route path="predictions" element={<ChurnPredictions />} />
-              <Route path="patterns" element={<SuccessPatterns />} />
-              <Route index element={<Navigate to="behavior" replace />} />
-            </Route>
-            <Route path="/feedback" element={<Feedback />} />
-            <Route path="/analytics" element={<Analytics />} />
-            <Route path="/reports" element={<Reports />} />
-            <Route path="/alerts" element={<Alerts />} />
-            <Route path="/settings" element={<Settings />} />
-            {/* Catch any unmatched routes and redirect to home */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </div>
-      </div>
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+      <Card className="col-span-4">
+        <CardHeader>
+          <CardTitle>Overview</CardTitle>
+        </CardHeader>
+        <CardContent className="pl-2">
+          {/* Add your charts or content here */}
+        </CardContent>
+      </Card>
+      <Card className="col-span-3">
+        <CardHeader>
+          <CardTitle>Recent Activity</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {/* Add your activity feed here */}
+        </CardContent>
+      </Card>
     </div>
   );
 } 
