@@ -59,7 +59,7 @@ export function DashboardHeader() {
         <div className="flex flex-1 items-center justify-center px-6">
           <div className="w-full max-w-md">
             <div className="relative">
-              <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
               <input
                 type="text"
                 placeholder="Search customers and projects..."
@@ -67,9 +67,15 @@ export function DashboardHeader() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
-                className={`w-full pl-8 transition-colors ${
-                  isSearchFocused ? 'border-brand-green ring-1 ring-brand-green' : ''
-                }`}
+                className={cn(
+                  "w-full pl-10 pr-4 py-2 rounded-lg border transition-all duration-200",
+                  "bg-gray-50/50 hover:bg-gray-50",
+                  "focus:outline-none focus:ring-2 focus:ring-brand-green/20",
+                  "focus:shadow-[0_0_0_2px_rgba(34,197,94,0.1)]",
+                  isSearchFocused 
+                    ? "border-brand-green bg-white" 
+                    : "border-gray-200"
+                )}
               />
             </div>
           </div>
