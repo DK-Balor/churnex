@@ -17,10 +17,18 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 console.log('Environment Variables:', {
   supabaseUrl: supabaseUrl ? 'Present' : 'Missing',
   supabaseAnonKey: supabaseAnonKey ? 'Present' : 'Missing',
-  allEnv: import.meta.env
+  allEnv: import.meta.env,
+  mode: import.meta.env.MODE,
+  dev: import.meta.env.DEV,
+  prod: import.meta.env.PROD,
+  base: import.meta.env.BASE_URL
 });
 
 if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('Missing environment variables:', {
+    supabaseUrl: supabaseUrl || 'undefined',
+    supabaseAnonKey: supabaseAnonKey ? 'present' : 'undefined'
+  });
   throw new Error('Missing Supabase environment variables');
 }
 
