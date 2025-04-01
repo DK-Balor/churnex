@@ -76,13 +76,14 @@ const SignupPage = () => {
             full_name: formData.name,
             company: formData.company,
           },
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
       });
 
       if (signUpError) throw signUpError;
 
       if (data?.user) {
-        navigate('/verify-email', { state: { email: formData.email } });
+        setSuccess(true);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred during signup');

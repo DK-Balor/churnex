@@ -35,7 +35,7 @@ export default function SettingsPage() {
   const fetchProfile = async () => {
     try {
       const { data, error } = await supabase
-        .from('users')
+        .from('profiles')
         .select('*')
         .eq('id', user?.id)
         .single();
@@ -52,23 +52,34 @@ export default function SettingsPage() {
 
   const handleProfileUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!profile) return;
+    if (!profile || !user?.id) return;
 
     setIsSaving(true);
     setError(null);
     setSuccess(null);
 
     try {
-      const { error } = await supabase
-        .from('users')
+      // Update profile in profiles table
+      const { error: profileError } = await supabase
+        .from('profiles')
         .update({
+          full_name: `${profile.first_name} ${profile.last_name}`,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', user.id);
+
+      if (profileError) throw profileError;
+
+      // Update user metadata in auth.users
+      const { error: authError } = await supabase.auth.updateUser({
+        data: {
           first_name: profile.first_name,
           last_name: profile.last_name,
           company: profile.company,
-        })
-        .eq('id', user?.id);
+        }
+      });
 
-      if (error) throw error;
+      if (authError) throw authError;
 
       setSuccess('Profile updated successfully');
     } catch (err) {
@@ -81,18 +92,30 @@ export default function SettingsPage() {
 
   const handleEmailUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!profile) return;
+    if (!profile || !user?.id) return;
 
     setIsSaving(true);
     setError(null);
     setSuccess(null);
 
     try {
-      const { error } = await supabase.auth.updateUser({
+      // Update email in auth.users
+      const { error: authError } = await supabase.auth.updateUser({
         email: profile.email
       });
 
-      if (error) throw error;
+      if (authError) throw authError;
+
+      // Update email in profiles table
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({
+          email: profile.email,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', user.id);
+
+      if (profileError) throw profileError;
 
       setSuccess('Email update confirmation sent');
     } catch (err) {

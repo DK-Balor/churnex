@@ -57,6 +57,9 @@ CREATE TRIGGER handle_updated_at
 CREATE OR REPLACE FUNCTION public.handle_new_user_profile()
 RETURNS TRIGGER AS $$
 BEGIN
+    -- Temporarily disable RLS for this function
+    SET LOCAL rls.force_admin_role = 'on';
+    
     INSERT INTO public.profiles (id, full_name, email)
     VALUES (
         NEW.id,
@@ -70,6 +73,10 @@ BEGIN
     SET full_name = EXCLUDED.full_name,
         email = EXCLUDED.email,
         updated_at = TIMEZONE('utc'::text, NOW());
+    
+    -- Re-enable RLS
+    SET LOCAL rls.force_admin_role = 'off';
+    
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
