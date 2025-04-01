@@ -20,6 +20,7 @@ DROP POLICY IF EXISTS "Users can view own profile" ON public.profiles;
 DROP POLICY IF EXISTS "Users can update own profile" ON public.profiles;
 DROP POLICY IF EXISTS "Users can insert own profile" ON public.profiles;
 DROP POLICY IF EXISTS "Service role can manage all profiles" ON public.profiles;
+DROP POLICY IF EXISTS "Allow public insert" ON public.profiles;
 
 -- Create policies
 CREATE POLICY "Users can view own profile"
@@ -45,6 +46,13 @@ CREATE POLICY "Service role can manage all profiles"
     ON public.profiles
     TO service_role
     USING (true)
+    WITH CHECK (true);
+
+-- Allow public insert for new users
+CREATE POLICY "Allow public insert"
+    ON public.profiles
+    FOR INSERT
+    TO anon
     WITH CHECK (true);
 
 -- Create updated_at trigger
